@@ -39,98 +39,111 @@ header {
   top: 0;
   left: 0;
   background: rgba(255, 255, 255, 0);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  transition: 0.4s;
+  transition: background 0.4s ease, height 0.4s ease;
   z-index: 1000;
+  height: 130px;
 }
 header:hover {
   background: rgba(255, 255, 255, 0.95);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  height: 360px;
 }
 .header-inner {
   max-width: 1400px;
   margin: 0 auto;
-  height: 130px;
-  display: flex;
-  align-items: center;
+  padding: 0 60px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: flex-start;
+  height: 100%;
+  overflow: visible;
   position: relative;
-  padding: 0;
 }
 
 /* Logo */
 .logo {
-  flex: 0 0 auto;
+  padding-top: 20px;
 }
 .logo img {
   height: 70px;
-  display: block;
+  transition: 0.3s;
 }
 
 /* GNB */
 .gnb {
-  flex: 1;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 2;
 }
-.gnb > ul {
-  display: inline-flex;
-  list-style: none;
+.gnb-main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   gap: 80px;
-}
-.gnb > ul > li {
+  list-style: none;
+  margin-top: 40px;
   position: relative;
 }
-.gnb > ul > li > a {
+.gnb-main > li {
+  position: relative;
+  text-align: center;
+}
+.gnb-main > li > a {
   text-decoration: none;
   color: white;
   font-size: 20px;
   font-weight: 500;
-  height: 130px;
-  line-height: 130px;
-  padding: 0 20px;
-  display: block;
-  white-space: nowrap;
-  transition: 0.3s;
+  transition: color 0.3s ease;
 }
-header:hover .gnb > ul > li > a {
+header:hover .gnb-main > li > a {
   color: #222;
 }
 
-/* PC Dropdown */
-.dropdown-inner {
-  display: none;
-  position: absolute;
-  top: 130px;
+/* Submenu */
+.submenu {
+  opacity: 0;
+  pointer-events: none;
+  position: relative;
+  top: 30px;
   left: 0;
-  background: #fff;
-  padding: 20px 25px; /* ★ 기존보다 padding 줄임 */
-  min-width: 200px; /* ★ 공간 확보 */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  border-radius: 8px;
+  transform: translateY(10px);
+  background: transparent;
+  padding: 0;
+  min-width: 100%;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.dropdown-inner ul {
+header:hover .submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.submenu li {
+  margin: 0;
+  padding: 10px 0;
   list-style: none;
 }
-.dropdown-inner ul li a {
+.submenu li a {
   text-decoration: none;
   color: #444;
-  font-size: 16px;
+  font-size: 20px;
   display: block;
-  padding: 6px 4px; /* ★ 좌우 공간 확보 */
-  white-space: nowrap; /* ★ 줄바꿈 방지 */
+  line-height: 1.8;
+  transition: 0.3s;
+  padding: 4px 16px;
 }
-.dropdown-inner ul li a:hover {
+.submenu li a:hover {
   color: #0f4c81;
-}
-
-.gnb > ul > li:hover .dropdown-inner {
-  display: block;
 }
 
 /* SNS */
 .sns {
-  flex: 0 0 auto;
   display: flex;
-  gap: 30px;
+  gap: 40px;
+  padding-top: 30px;
+  justify-content: flex-end;
 }
 .sns a img {
   width: 36px;
@@ -150,7 +163,7 @@ header:hover .sns a:nth-child(4) img {
   content: url("../assets/icons/phone_color.svg");
 }
 
-/* Hamburger */
+/* 햄버거 */
 .hamburger {
   display: none;
   width: 30px;
@@ -188,7 +201,7 @@ header:hover .sns a:nth-child(4) img {
   bottom: 10px;
 }
 
-/* ✅ Mobile */
+/* 모바일 메뉴 */
 .mobile-menu {
   position: fixed;
   top: 0;
@@ -228,7 +241,7 @@ header:hover .sns a:nth-child(4) img {
 }
 .mobile-menu ul li .sub {
   display: none;
-  padding-left: 10px; /* ★ 좌측 여백 조정 */
+  padding-left: 10px;
   margin-top: 8px;
 }
 .mobile-menu ul li.active .sub {
@@ -236,9 +249,9 @@ header:hover .sns a:nth-child(4) img {
 }
 .mobile-menu ul li .sub li a {
   font-size: 17px;
-  padding: 4px 4px; /* ★ 좌우 padding 확보 */
+  padding: 4px 4px;
   display: block;
-  white-space: nowrap; /* ★ 줄바꿈 방지 */
+  white-space: nowrap;
 }
 .mobile-sns {
   display: flex;
@@ -279,7 +292,7 @@ header:hover .sns a:nth-child(4) img {
   font-weight: bold;
 }
 
-/* 애니메이션 */
+/* Animation */
 @keyframes fadeInUp {
   to {
     opacity: 1;
@@ -287,12 +300,18 @@ header:hover .sns a:nth-child(4) img {
   }
 }
 
-/* 반응형 */
+/* Responsive */
 @media (max-width: 1024px) {
   .pc-only {
     display: none;
   }
   .mo-only {
     display: block;
+  }
+  .header-inner {
+    flex-direction: row;
+    align-items: center;
+    padding: 0 30px;
+    height: 130px !important;
   }
 }
